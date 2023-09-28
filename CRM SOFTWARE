@@ -1,0 +1,261 @@
+import java.util.*;
+import java.text.SimpleDateFormat;
+
+class Contact {
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private String address;
+    private List<Task> tasks;
+    private List<Meeting> meetings;
+
+    public Contact(String id, String firstName, String lastName, String email, String phoneNumber, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.tasks = new ArrayList<>();
+        this.meetings = new ArrayList<>();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void addTask(Task task) {
+        tasks.add(task);
+    }
+
+    public List<Meeting> getMeetings() {
+        return meetings;
+    }
+
+    public void addMeeting(Meeting meeting) {
+        meetings.add(meeting);
+    }
+}
+
+class Lead {
+    private String id;
+    private String companyName;
+    private String contactId;
+    private String status;
+
+    public Lead(String id, String companyName, String contactId) {
+        this.id = id;
+        this.companyName = companyName;
+        this.contactId = contactId;
+        this.status = "New"; // Default status
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void convertToOpportunity() {
+        this.status = "Converted";
+    }
+}
+
+class Customer {
+    private String id;
+    private String companyName;
+    private String contactId;
+
+    public Customer(String id, String companyName, String contactId) {
+        this.id = id;
+        this.companyName = companyName;
+        this.contactId = contactId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+}
+
+class Task {
+    private String id;
+    private String title;
+    private String description;
+    private Date dueDate;
+    private boolean completed;
+    private String contactId;
+
+    public Task(String id, String title, String description, Date dueDate, String contactId) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.completed = false; // Default status
+        this.contactId = contactId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public String getContactId() {
+        return contactId;
+    }
+
+    public void markAsCompleted() {
+        this.completed = true;
+    }
+}
+
+class Meeting {
+    private String id;
+    private String title;
+    private String description;
+    private Date dateTime;
+
+    public Meeting(String id, String title, String description, Date dateTime) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dateTime = dateTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+}
+
+class CRMSystem {
+    private Map<String, Contact> contactsMap; // Store contacts by ID
+    private Map<String, Lead> leadsMap; // Store leads by ID
+    private Map<String, Customer> customersMap; // Store customers by ID
+    private List<Task> tasks;
+    private List<Meeting> meetings;
+
+    public CRMSystem() {
+        contactsMap = new HashMap<>();
+        leadsMap = new HashMap<>();
+        customersMap = new HashMap<>();
+        tasks = new ArrayList<>();
+        meetings = new ArrayList<>();
+    }
+
+    // Methods for CRUD operations on contacts, leads, customers, tasks, and meetings
+
+    public void addContact(Contact contact) {
+        contactsMap.put(contact.getId(), contact);
+    }
+
+    public void updateContact(String contactId, Contact updatedContact) {
+        contactsMap.put(contactId, updatedContact);
+    }
+
+    public void deleteContact(String contactId) {
+        contactsMap.remove(contactId);
+    }
+
+    // Methods for CRUD operations on leads, customers, tasks, and meetings
+    // ...
+
+    // Additional methods for CRM functionality, such as searching, filtering, and reporting
+    public List<Contact> getAllContacts() {
+        return new ArrayList<>(contactsMap.values());
+    }
+
+    public List<Task> getTasksForContact(String contactId) {
+        List<Task> contactTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getContactId().equals(contactId)) {
+                contactTasks.add(task);
+            }
+        }
+        return contactTasks;
+    }
+
+    // Additional CRM functionality methods
+    // ...
+
+    // Integration with email, calendar, and contact management can be added here
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create and initialize the CRM system
+        CRMSystem crmSystem = new CRMSystem();
+
+        // Implement user interface and interaction with the CRM system here
+        // You can create a CLI or GUI interface to interact with the CRM functionality
+    }
+}
